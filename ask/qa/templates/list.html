@@ -1,9 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div>
-    {% for question in questions %}
-        <p><a href="{{ question.get_absolute_url }}">{{ question.title }}</a></p>
-    {% endfor %}
-</div>
+{% for question in questions %}
+    <a href="{{ question.get_absolute_url }}">{{ question.title }}</a>
+{% endfor %}
 {% endblock %}

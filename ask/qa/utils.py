@@ -2,8 +2,8 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 
 def get_question_list(request, qs):
-    paginator = Paginator(qs, 2)
-    page_number = request.GET.get('page', 10)
+    paginator = Paginator(qs, 10)
+    page_number = request.GET.get('page', 1)
     try:
         questions = paginator.page(page_number)
     except PageNotAnInteger:
