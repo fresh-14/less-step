@@ -6,7 +6,7 @@
     <p>{{ question.text }}</p>
     <div>
         {% for answer in question.answer_set.all %}
-            <p>answer.text</p>
+            <p>{{ answer.text }}</p>
         {% endfor %}
     </div>
 </div>
