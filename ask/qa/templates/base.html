@@ -5,6 +5,13 @@
     <title>Home</title>
 </head>
 <body>
+<div>
+    {% if request.user.is_authenticated %}
+    <a href="{% url 'qa:user_logout' %}">Logout</a>
+    {% else %}
+    <a href="{% url 'qa:user_login' %}">Login</a>
+    {% endif %}
+</div>
 {% block content %}{% endblock %}
 </body>
 </html>
