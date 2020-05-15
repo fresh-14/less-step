@@ -1,8 +1,9 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 
 from .models import Question
 from .utils import get_question_list
+from .forms import AskForm, AnswerForm
 
 
 def new_questions(request):
@@ -19,7 +20,28 @@ def popular_list_questions(request):
 
 def question_detail(request, id):
     question = get_object_or_404(Question, pk=id)
-    return render(request, 'detail.html', {'question': question})
+    if request.method == 'POST':
+        answer_form = AnswerForm(request.POST)
+        if answer_form.is_valid():
+            answer = answer_form.save(commit=False)
+            answer.question = question
+            answer.save()
+            return redirect(question)
+    else:
+        answer_form = AnswerForm()
+    return render(request, 'detail.html', {'question': question,
+                                           'form': answer_form})
+
+
+def create_question(request):
+    if request.method == 'POST':
+        question_form = AskForm(request.POST)
+        if question_form.is_valid():
+            question = question_form.save()
+            return redirect(question)
+    else:
+        question_form = AskForm()
+    return render(request, 'ask.html', {'form': question_form})
 
 
 def test(request, *args, **kwargs):
